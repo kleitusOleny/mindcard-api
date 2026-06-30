@@ -19,15 +19,15 @@ public class Card {
     
     private String synonyms;
 
-    private boolean isFavorite = false;
-    private double easeFactor = 2.5;
+    private Boolean isFavorite = false;
+    private Double easeFactor = 2.5;
 
     @Column(name = "review_interval")
-    private double interval = 0.0;
+    private Double interval = 0.0;
 
-    private int repetitions = 0;
-    private long nextReview = System.currentTimeMillis();
-    private long lastReview = 0L;
+    private Integer repetitions = 0;
+    private Long nextReview = System.currentTimeMillis();
+    private Long lastReview = 0L;
     private String reviewState = "New";
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -111,55 +111,55 @@ public class Card {
     }
 
     public boolean isFavorite() {
-        return isFavorite;
+        return isFavorite != null ? isFavorite : false;
     }
 
-    public void setFavorite(boolean favorite) {
-        isFavorite = favorite;
+    public void setFavorite(Boolean favorite) {
+        this.isFavorite = favorite;
     }
 
     public double getEaseFactor() {
-        return easeFactor;
+        return easeFactor != null ? easeFactor : 2.5;
     }
 
-    public void setEaseFactor(double easeFactor) {
+    public void setEaseFactor(Double easeFactor) {
         this.easeFactor = easeFactor;
     }
 
     public double getInterval() {
-        return interval;
+        return interval != null ? interval : 0.0;
     }
 
-    public void setInterval(double interval) {
+    public void setInterval(Double interval) {
         this.interval = interval;
     }
 
     public int getRepetitions() {
-        return repetitions;
+        return repetitions != null ? repetitions : 0;
     }
 
-    public void setRepetitions(int repetitions) {
+    public void setRepetitions(Integer repetitions) {
         this.repetitions = repetitions;
     }
 
     public long getNextReview() {
-        return nextReview;
+        return nextReview != null ? nextReview : System.currentTimeMillis();
     }
 
-    public void setNextReview(long nextReview) {
+    public void setNextReview(Long nextReview) {
         this.nextReview = nextReview;
     }
 
     public long getLastReview() {
-        return lastReview;
+        return lastReview != null ? lastReview : 0L;
     }
 
-    public void setLastReview(long lastReview) {
+    public void setLastReview(Long lastReview) {
         this.lastReview = lastReview;
     }
 
     public String getReviewState() {
-        return reviewState;
+        return reviewState != null ? reviewState : "New";
     }
 
     public void setReviewState(String reviewState) {
