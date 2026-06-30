@@ -1,12 +1,14 @@
 package com.example.mindcard.controller;
 
 import com.example.mindcard.dto.StudySessionRequest;
+import com.example.mindcard.dto.PromptRequest;
 import com.example.mindcard.model.Card;
 import com.example.mindcard.model.Deck;
 import com.example.mindcard.model.UserProfile;
 import com.example.mindcard.repository.CardRepository;
 import com.example.mindcard.repository.DeckRepository;
 import com.example.mindcard.repository.UserProfileRepository;
+import com.example.mindcard.service.GeminiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +28,9 @@ public class DeckController {
 
     @Autowired
     private UserProfileRepository userProfileRepository;
+
+    @Autowired
+    private GeminiService geminiService;
 
     @GetMapping
     public ResponseEntity<List<Deck>> getDecks(@PathVariable String userId) {
@@ -197,6 +202,27 @@ public class DeckController {
         // 7. Save and return updated profile
         UserProfile savedProfile = userProfileRepository.save(profile);
         return ResponseEntity.ok(savedProfile);
+    }
+
+    @PostMapping("/generate-ai")
+    public ResponseEntity<Deck> generateDeckAi(
+            @PathVariable String userId,
+            @RequestBody PromptRequest request
+    ) {
+        try {
+            Deck generatedDeck = geminiService.generateDeck(request.getPrompt());
+            generatedDeck.setUserId(userId);
+            if (generatedDeck.getCards() != null) {
+                for (Card card : generatedDeck.getCards()) {
+                    card.setDeck(generatedDeck);
+                }
+            }
+            Deck saved = deckRepository.save(generatedDeck);
+            return ResponseEntity.ok(saved);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     private int calculateMastered(List<Card> cards) {
