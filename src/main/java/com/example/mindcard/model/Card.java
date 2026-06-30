@@ -21,7 +21,10 @@ public class Card {
 
     private boolean isFavorite = false;
     private double easeFactor = 2.5;
+
+    @Column(name = "review_interval")
     private double interval = 0.0;
+
     private int repetitions = 0;
     private long nextReview = System.currentTimeMillis();
     private long lastReview = 0L;
