@@ -49,6 +49,13 @@ public class UserController {
         return ResponseEntity.ok(saved);
     }
 
+    @GetMapping("/leaderboard")
+    public ResponseEntity<List<UserProfile>> getLeaderboard() {
+        List<UserProfile> list = userProfileRepository.findAll();
+        list.sort((u1, u2) -> Integer.compare(u2.getTotalXp(), u1.getTotalXp()));
+        return ResponseEntity.ok(list);
+    }
+
     @GetMapping("/{userId}/daily-records")
     public ResponseEntity<List<DailyStudyRecord>> getDailyRecords(@PathVariable String userId) {
         return ResponseEntity.ok(dailyStudyRecordRepository.findByUserId(userId));
