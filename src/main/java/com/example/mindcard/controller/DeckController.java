@@ -8,6 +8,7 @@ import com.example.mindcard.model.UserProfile;
 import com.example.mindcard.repository.CardRepository;
 import com.example.mindcard.repository.DeckRepository;
 import com.example.mindcard.repository.UserProfileRepository;
+import com.example.mindcard.service.DeckGeneratorService;
 import com.example.mindcard.service.GeminiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,9 @@ public class DeckController {
 
     @Autowired
     private GeminiService geminiService;
+
+    @Autowired
+    private DeckGeneratorService deckGeneratorService;
 
     @GetMapping
     public ResponseEntity<List<Deck>> getDecks(@PathVariable String userId) {
@@ -210,7 +214,7 @@ public class DeckController {
             @RequestBody PromptRequest request
     ) {
         try {
-            Deck generatedDeck = geminiService.generateDeck(request.getPrompt());
+            Deck generatedDeck = deckGeneratorService.generateDeckWithFallback(request.getPrompt());
             generatedDeck.setUserId(userId);
             if (generatedDeck.getCards() != null) {
                 for (Card card : generatedDeck.getCards()) {
