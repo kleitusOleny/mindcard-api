@@ -122,6 +122,13 @@ public class DeckController {
                         card.setDefinition(cardDetails.getDefinition());
                         card.setExampleSentence(cardDetails.getExampleSentence());
                         card.setSynonyms(cardDetails.getSynonyms());
+                        card.setFavorite(cardDetails.isFavorite());
+                        card.setEaseFactor(cardDetails.getEaseFactor());
+                        card.setInterval(cardDetails.getInterval());
+                        card.setRepetitions(cardDetails.getRepetitions());
+                        card.setNextReview(cardDetails.getNextReview());
+                        card.setLastReview(cardDetails.getLastReview());
+                        card.setReviewState(cardDetails.getReviewState());
                         deck.setMasteredPercentage(calculateMastered(deck.getCards()));
                         Deck saved = deckRepository.save(deck);
                         return ResponseEntity.ok(saved);
@@ -230,6 +237,10 @@ public class DeckController {
     }
 
     private int calculateMastered(List<Card> cards) {
-        return cards.isEmpty() ? 0 : 10;
+        if (cards.isEmpty()) return 0;
+        long masteredCount = cards.stream()
+                .filter(c -> c.getInterval() >= 21.0 || c.getRepetitions() >= 3)
+                .count();
+        return (int) (masteredCount * 100 / cards.size());
     }
 }

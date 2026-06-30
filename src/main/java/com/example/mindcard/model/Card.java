@@ -19,6 +19,14 @@ public class Card {
     
     private String synonyms;
 
+    private boolean isFavorite = false;
+    private double easeFactor = 2.5;
+    private double interval = 0.0;
+    private int repetitions = 0;
+    private long nextReview = System.currentTimeMillis();
+    private long lastReview = 0L;
+    private String reviewState = "New";
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deck_id")
     @JsonIgnore
@@ -34,6 +42,13 @@ public class Card {
         this.definition = definition;
         this.exampleSentence = exampleSentence;
         this.synonyms = synonyms;
+        this.isFavorite = false;
+        this.easeFactor = 2.5;
+        this.interval = 0.0;
+        this.repetitions = 0;
+        this.nextReview = System.currentTimeMillis();
+        this.lastReview = 0L;
+        this.reviewState = "New";
     }
 
     public String getId() {
@@ -90,6 +105,62 @@ public class Card {
 
     public void setSynonyms(String synonyms) {
         this.synonyms = synonyms;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    public double getEaseFactor() {
+        return easeFactor;
+    }
+
+    public void setEaseFactor(double easeFactor) {
+        this.easeFactor = easeFactor;
+    }
+
+    public double getInterval() {
+        return interval;
+    }
+
+    public void setInterval(double interval) {
+        this.interval = interval;
+    }
+
+    public int getRepetitions() {
+        return repetitions;
+    }
+
+    public void setRepetitions(int repetitions) {
+        this.repetitions = repetitions;
+    }
+
+    public long getNextReview() {
+        return nextReview;
+    }
+
+    public void setNextReview(long nextReview) {
+        this.nextReview = nextReview;
+    }
+
+    public long getLastReview() {
+        return lastReview;
+    }
+
+    public void setLastReview(long lastReview) {
+        this.lastReview = lastReview;
+    }
+
+    public String getReviewState() {
+        return reviewState;
+    }
+
+    public void setReviewState(String reviewState) {
+        this.reviewState = reviewState;
     }
 
     public Deck getDeck() {
