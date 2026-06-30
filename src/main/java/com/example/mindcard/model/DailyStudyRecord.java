@@ -18,16 +18,18 @@ public class DailyStudyRecord {
     private int wordsLearned;
     private int xpEarned;
     private int timeSpentMin;
+    private int mastered;
 
     public DailyStudyRecord() {}
 
-    public DailyStudyRecord(String userId, String date, int dueCards, int wordsLearned, int xpEarned, int timeSpentMin) {
+    public DailyStudyRecord(String userId, String date, int dueCards, int wordsLearned, int xpEarned, int timeSpentMin, int mastered) {
         this.userId = userId;
         this.date = date;
         this.dueCards = dueCards;
         this.wordsLearned = wordsLearned;
         this.xpEarned = xpEarned;
         this.timeSpentMin = timeSpentMin;
+        this.mastered = mastered;
     }
 
     public String getUserId() {
@@ -76,6 +78,14 @@ public class DailyStudyRecord {
 
     public void setTimeSpentMin(int timeSpentMin) {
         this.timeSpentMin = timeSpentMin;
+    }
+
+    public int getMastered() {
+        return mastered;
+    }
+
+    public void setMastered(int mastered) {
+        this.mastered = mastered;
     }
 
     // Class đại diện cho khóa chính hỗn hợp (Composite Primary Key)
