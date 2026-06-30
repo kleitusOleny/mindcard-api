@@ -64,6 +64,7 @@ public class DeckController {
                 .map(deck -> {
                     deck.setName(deckDetails.getName());
                     deck.setCategory(deckDetails.getCategory());
+                    deck.setMasteredPercentage(deckDetails.getMasteredPercentage());
                     if (deckDetails.getCoverUrl() != null) {
                         deck.setCoverUrl(deckDetails.getCoverUrl());
                     }
